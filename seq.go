@@ -55,35 +55,36 @@ func (c *codon) translate() rune {
 	return '!'
 }
 
+// Entry Library -> May refactor later
 type Entry struct {
-	nuc_acid  DNA
-	rnuc_acid RNA
+	nucAcid  DNA
+	rnucAcid RNA
 }
 
-// Section DNA
+// DNA Section
 type DNA struct {
-	name             string
-	sequence         []rune
-	complement       []rune
-	size             int
-	frequency        map[rune]int // count, not percentage
-	known_complement bool         // True if user entered a known complement. Enables mutation checking. False if complement was calculated.
-	subsequences     []rune       // noted subsequences, if added by user
+	name            string
+	sequence        []rune
+	complement      []rune
+	size            int
+	frequency       map[rune]int // count, not percentage
+	knownComplement bool         // True if user entered a known complement. Enables mutation checking. False if complement was calculated.
+	subsequences    []rune       // noted subsequences, if added by user
 }
 
 func newDNA(title string, seq string) *DNA {
 	d := DNA{name: title}
 	d.sequence = []rune(seq)
 
-	d.validate_dna()
-	d.reverse_complement('y')
-	d.gc_content()
+	d.validateDna()
+	d.reverseComplement('y')
+	d.gcContent()
 
 	return &d
 }
 
 //	Ensure all runes are capital, all unknowns are 'N'
-func (s *DNA) validate_dna() {
+func (s *DNA) validateDna() {
 	s.size = len(s.sequence)
 	for i := 0; i < s.size; i++ {
 		if s.sequence[i] == 'a' || s.sequence[i] == 'c' || s.sequence[i] == 't' || s.sequence[i] == 'g' {
@@ -93,7 +94,7 @@ func (s *DNA) validate_dna() {
 }
 
 //	choice should take in a user choice. Also set known_complement here
-func (s *DNA) reverse_complement(auto rune) {
+func (s *DNA) reverseComplement(auto rune) {
 	if auto == 'y' || auto == 'Y' {
 		for i := 0; i < s.size; i++ {
 			if s.sequence[i] == 'A' {
@@ -116,22 +117,22 @@ func (s *DNA) reverse_complement(auto rune) {
 	}
 }
 
-func (s *DNA) gc_content() float64 {
+func (s *DNA) gcContent() float64 {
 	return 0.0
 }
 
 // only use if the user requests a set of subsequences
-func (s *DNA) subseq_gc_content(entry int, end int) float64 {
+func (s *DNA) subseqGcContent(entry int, end int) float64 {
 	return 0.0
 }
 
-func (s *DNA) print_strands() {
+func (s *DNA) printStrands() {
 	for i := 0; i < s.size; i++ {
 		fmt.Printf("%c - %c\n", s.sequence[i], s.complement[i])
 	}
 }
 
-// Section RNA
+// RNA Section
 type RNA struct {
 	name     string
 	sequence []rune
@@ -193,13 +194,13 @@ func transcribe(d DNA) *RNA {
 		r.mRNA = r.sequence[start:end]
 	}
 
-	r.extract_codons()
+	r.extractCodons()
 
 	return &r
 }
 
 // needs to be rewritten
-func (r *RNA) extract_codons() {
+func (r *RNA) extractCodons() {
 	k := 0
 	insert := codon{}
 	for k < len(r.mRNA) {
@@ -221,7 +222,7 @@ func (r *RNA) extract_codons() {
 	}
 }
 
-func (r *RNA) mrna_print() {
+func (r *RNA) mrnaPrint() {
 	fmt.Println("Printing mRNA: ")
 	fmt.Println(r.mRNA)
 	for i := 0; i < len(r.mRNA); i++ {
@@ -229,21 +230,22 @@ func (r *RNA) mrna_print() {
 	}
 }
 
+// Protein Section (Amino Acid sequences)
 type Protein struct {
 	name      string
 	aminoacid string
 	size      int
 }
 
-func translate_to_protein(m RNA) *Protein {
+func translateToProtein(m RNA) *Protein {
 	p := Protein{name: m.name}
-	var temp_aa []rune
-	for _, res_codon := range m.codons {
-		residue := res_codon.translate()
-		temp_aa = append(temp_aa, residue)
+	var tempAA []rune
+	for _, resCodon := range m.codons {
+		residue := resCodon.translate()
+		tempAA = append(tempAA, residue)
 	}
 
-	p.aminoacid = string(temp_aa)
+	p.aminoacid = string(tempAA)
 	return &p
 }
 
@@ -256,10 +258,10 @@ func main() {
 	fmt.Println(seq)
 
 	testDNA := newDNA("test", seq)
-	testDNA.print_strands()
+	testDNA.printStrands()
 
 	// Testing RNA component
 	testRNA := transcribe(*testDNA)
-	testRNA.mrna_print()
+	testRNA.mrnaPrint()
 	// Testing Protein Component
 }
