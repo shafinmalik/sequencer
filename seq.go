@@ -146,9 +146,10 @@ func transcribe(d DNA) *RNA {
 	var choice rune
 	var start int
 	var end int
+
 	fmt.Printf("Transcribe (F)ull strand or (S)ubsequence?\n")
 	for {
-		fmt.Scanf("%c", &choice)
+		fmt.Scanf("%c\n", &choice)
 		// fmt.Println(choice)
 
 		if choice == 'f' || choice == 's' {
@@ -178,19 +179,27 @@ func transcribe(d DNA) *RNA {
 
 	} else if choice == 's' {
 		// valid_range := false
+		validRange := false
+		for validRange != true {
+			fmt.Println("Enter starting nucleotide: ")
+			n, err := fmt.Scanf("%d\n", &start)
+			if err != nil || n != 1 {
+				fmt.Println(n, err)
+			}
 
-		for {
-			fmt.Println("Enter starting nucleotide followed by ending nucleotide: ")
+			fmt.Println("Enter ending nucleotide: ")
+			n, err = fmt.Scanf("%d\n", &end)
+			if err != nil || n != 1 {
+				fmt.Println(n, err)
+			}
 
-			//fmt.Scanf("%d\n", &start)
-			fmt.Scanf("%d\n%d\n", &start, &end)
-
-			//fmt.Println(start)
-			//fmt.Println(end)
-			if start >= 0 && end < d.size && start < end {
-				break
+			if start >= 0 && end <= d.size && start < end {
+				validRange = true
+			} else {
+				fmt.Println("Invalid range, please re-enter")
 			}
 		}
+
 		r.mRNA = r.sequence[start:end]
 	}
 
@@ -262,6 +271,7 @@ func main() {
 
 	// Testing RNA component
 	testRNA := transcribe(*testDNA)
+	fmt.Println(testRNA.sequence)
 	testRNA.mrnaPrint()
 	// Testing Protein Component
 }
