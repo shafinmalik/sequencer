@@ -1,5 +1,5 @@
 # sequencer
- A simple bioinformatics toolkit for finding the similarity between amino acid sequences. 
+ A simple bioinformatics tool for finding the similarity between amino acid sequences. 
  
 ## DNA struct
 

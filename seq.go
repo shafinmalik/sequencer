@@ -199,10 +199,8 @@ func transcribe(d DNA) *RNA {
 				fmt.Println("Invalid range, please re-enter")
 			}
 		}
-
 		r.mRNA = r.sequence[start:end]
 	}
-
 	r.extractCodons()
 
 	return &r
