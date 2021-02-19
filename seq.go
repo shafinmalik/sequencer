@@ -10,44 +10,45 @@ type codon [3]rune
 
 func (c *codon) translate() rune {
 	tc := map[codon]rune{
-		{'G', 'C', 'T'}: 'A', {'G', 'C', 'C'}: 'A', {'G', 'C', 'A'}: 'A', {'G', 'C', 'G'}: 'A',
+		{'G', 'C', 'U'}: 'A', {'G', 'C', 'C'}: 'A', {'G', 'C', 'A'}: 'A', {'G', 'C', 'G'}: 'A',
 
-		{'T', 'G', 'T'}: 'C', {'T', 'G', 'C'}: 'C',
+		{'U', 'G', 'U'}: 'C', {'U', 'G', 'C'}: 'C',
 
-		{'G', 'A', 'T'}: 'D', {'G', 'A', 'C'}: 'D',
+		{'G', 'A', 'U'}: 'D', {'G', 'A', 'C'}: 'D',
 
 		{'G', 'A', 'A'}: 'E', {'G', 'A', 'G'}: 'E',
 
-		{'T', 'T', 'T'}: 'F', {'T', 'T', 'C'}: 'F',
+		{'U', 'U', 'U'}: 'F', {'U', 'U', 'C'}: 'F',
 
-		{'G', 'G', 'T'}: 'G', {'G', 'G', 'C'}: 'G', {'G', 'G', 'A'}: 'G', {'G', 'G', 'G'}: 'G',
+		{'G', 'G', 'U'}: 'G', {'G', 'G', 'C'}: 'G', {'G', 'G', 'A'}: 'G', {'G', 'G', 'G'}: 'G',
 
-		{'C', 'A', 'T'}: 'H', {'C', 'A', 'C'}: 'H',
+		{'C', 'A', 'U'}: 'H', {'C', 'A', 'C'}: 'H',
 
-		{'A', 'T', 'A'}: 'I', {'A', 'T', 'T'}: 'I',
-		{'A', 'T', 'C'}: 'I', {'A', 'A', 'A'}: 'K',
+		{'A', 'U', 'A'}: 'I', {'A', 'U', 'U'}: 'I',
+		{'A', 'U', 'C'}: 'I', {'A', 'A', 'A'}: 'K',
 
 		{'A', 'A', 'G'}: 'K',
 
-		{'T', 'T', 'A'}: 'L', {'T', 'T', 'G'}: 'L', {'C', 'T', 'T'}: 'L', {'C', 'T', 'C'}: 'L',
-		{'C', 'T', 'A'}: 'L', {'C', 'T', 'G'}: 'L',
+		{'U', 'U', 'A'}: 'L', {'U', 'U', 'G'}: 'L', {'C', 'U', 'U'}: 'L', {'C', 'U', 'C'}: 'L',
+		{'C', 'U', 'A'}: 'L', {'C', 'U', 'G'}: 'L',
 
-		{'A', 'T', 'G'}: 'M', {'A', 'A', 'T'}: 'N', {'A', 'A', 'C'}: 'N',
-		{'C', 'C', 'T'}: 'P', {'C', 'C', 'C'}: 'P', {'C', 'C', 'A'}: 'P', {'C', 'C', 'G'}: 'P',
+		{'A', 'U', 'G'}: 'M', {'A', 'A', 'U'}: 'N', {'A', 'A', 'C'}: 'N',
+		{'C', 'C', 'U'}: 'P', {'C', 'C', 'C'}: 'P', {'C', 'C', 'A'}: 'P', {'C', 'C', 'G'}: 'P',
 		{'C', 'A', 'A'}: 'Q', {'C', 'A', 'G'}: 'Q',
-		{'C', 'G', 'T'}: 'R', {'C', 'G', 'C'}: 'R', {'C', 'G', 'A'}: 'R', {'C', 'G', 'G'}: 'R', {'A', 'G', 'A'}: 'R', {'A', 'G', 'G'}: 'R',
-		{'T', 'C', 'T'}: 'S', {'T', 'C', 'C'}: 'S', {'T', 'C', 'A'}: 'S', {'T', 'C', 'G'}: 'S', {'A', 'G', 'T'}: 'S', {'A', 'G', 'C'}: 'S',
+		{'C', 'G', 'U'}: 'R', {'C', 'G', 'C'}: 'R', {'C', 'G', 'A'}: 'R', {'C', 'G', 'G'}: 'R', {'A', 'G', 'A'}: 'R', {'A', 'G', 'G'}: 'R',
+		{'U', 'C', 'U'}: 'S', {'U', 'C', 'C'}: 'S', {'U', 'C', 'A'}: 'S', {'U', 'C', 'G'}: 'S', {'A', 'G', 'U'}: 'S', {'A', 'G', 'C'}: 'S',
 
-		{'A', 'C', 'T'}: 'T', {'A', 'C', 'C'}: 'T', {'A', 'C', 'A'}: 'T', {'A', 'C', 'G'}: 'T',
+		{'A', 'C', 'U'}: 'T', {'A', 'C', 'C'}: 'T', {'A', 'C', 'A'}: 'T', {'A', 'C', 'G'}: 'T',
 
-		{'G', 'T', 'T'}: 'V', {'G', 'T', 'C'}: 'V', {'G', 'T', 'A'}: 'V', {'G', 'T', 'G'}: 'V',
-		{'T', 'G', 'G'}: 'W',
-		{'T', 'A', 'T'}: 'Y', {'T', 'A', 'C'}: 'Y',
-		{'T', 'A', 'A'}: '_', {'T', 'A', 'G'}: '_', {'T', 'G', 'A'}: '_',
+		{'G', 'U', 'U'}: 'V', {'G', 'U', 'C'}: 'V', {'G', 'U', 'A'}: 'V', {'G', 'U', 'G'}: 'V',
+		{'U', 'G', 'G'}: 'W',
+		{'U', 'A', 'U'}: 'Y', {'U', 'A', 'C'}: 'Y',
+		{'U', 'A', 'A'}: '_', {'U', 'A', 'G'}: '_', {'U', 'G', 'A'}: '_',
 	}
 
 	// DEBUG Check syntax
 	value, ok := tc[*c]
+	fmt.Println(value, ok)
 	if ok {
 		return value
 	}
@@ -247,13 +248,21 @@ type Protein struct {
 func translateToProtein(m RNA) *Protein {
 	p := Protein{name: m.name}
 	var tempAA []rune
-	for _, resCodon := range m.codons {
-		residue := resCodon.translate()
-		tempAA = append(tempAA, residue)
+
+	for i := 0; i < len(m.codons); i++ {
+		fmt.Println(m.codons[i])
+		tempCodon := m.codons[i].translate()
+		fmt.Println(tempCodon)
+		tempAA = append(tempAA, tempCodon)
 	}
 
 	p.aminoacid = string(tempAA)
 	return &p
+}
+
+// remove the last residue if its codon did not include 3 nucleotides.
+func (p *Protein) removeDummyResidue() {
+
 }
 
 func main() {
@@ -262,14 +271,17 @@ func main() {
 	fmt.Println("Enter Sequence: ")
 	var seq string
 	fmt.Scanf("%s", &seq)
-	fmt.Println(seq)
+	//fmt.Println(seq)
 
 	testDNA := newDNA("test", seq)
-	testDNA.printStrands()
+	//testDNA.printStrands()
 
 	// Testing RNA component
 	testRNA := transcribe(*testDNA)
-	fmt.Println(testRNA.sequence)
+	//fmt.Println(testRNA.sequence)
 	testRNA.mrnaPrint()
+
 	// Testing Protein Component
+	testPrtn := translateToProtein(*testRNA)
+	fmt.Println(testPrtn)
 }
