@@ -1,4 +1,5 @@
-# sequencer.go
+# sequencer.go 
+### (Work in Progress)
  A simple bioinformatics tool for finding the similarity between amino acid sequences. 
 
  ### TODO: 

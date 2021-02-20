@@ -11,35 +11,23 @@ type codon [3]rune
 func (c *codon) translate() rune {
 	tc := map[codon]rune{
 		{'G', 'C', 'U'}: 'A', {'G', 'C', 'C'}: 'A', {'G', 'C', 'A'}: 'A', {'G', 'C', 'G'}: 'A',
-
 		{'U', 'G', 'U'}: 'C', {'U', 'G', 'C'}: 'C',
-
 		{'G', 'A', 'U'}: 'D', {'G', 'A', 'C'}: 'D',
-
 		{'G', 'A', 'A'}: 'E', {'G', 'A', 'G'}: 'E',
-
 		{'U', 'U', 'U'}: 'F', {'U', 'U', 'C'}: 'F',
-
 		{'G', 'G', 'U'}: 'G', {'G', 'G', 'C'}: 'G', {'G', 'G', 'A'}: 'G', {'G', 'G', 'G'}: 'G',
-
 		{'C', 'A', 'U'}: 'H', {'C', 'A', 'C'}: 'H',
-
 		{'A', 'U', 'A'}: 'I', {'A', 'U', 'U'}: 'I',
 		{'A', 'U', 'C'}: 'I', {'A', 'A', 'A'}: 'K',
-
 		{'A', 'A', 'G'}: 'K',
-
 		{'U', 'U', 'A'}: 'L', {'U', 'U', 'G'}: 'L', {'C', 'U', 'U'}: 'L', {'C', 'U', 'C'}: 'L',
 		{'C', 'U', 'A'}: 'L', {'C', 'U', 'G'}: 'L',
-
 		{'A', 'U', 'G'}: 'M', {'A', 'A', 'U'}: 'N', {'A', 'A', 'C'}: 'N',
 		{'C', 'C', 'U'}: 'P', {'C', 'C', 'C'}: 'P', {'C', 'C', 'A'}: 'P', {'C', 'C', 'G'}: 'P',
 		{'C', 'A', 'A'}: 'Q', {'C', 'A', 'G'}: 'Q',
 		{'C', 'G', 'U'}: 'R', {'C', 'G', 'C'}: 'R', {'C', 'G', 'A'}: 'R', {'C', 'G', 'G'}: 'R', {'A', 'G', 'A'}: 'R', {'A', 'G', 'G'}: 'R',
 		{'U', 'C', 'U'}: 'S', {'U', 'C', 'C'}: 'S', {'U', 'C', 'A'}: 'S', {'U', 'C', 'G'}: 'S', {'A', 'G', 'U'}: 'S', {'A', 'G', 'C'}: 'S',
-
 		{'A', 'C', 'U'}: 'T', {'A', 'C', 'C'}: 'T', {'A', 'C', 'A'}: 'T', {'A', 'C', 'G'}: 'T',
-
 		{'G', 'U', 'U'}: 'V', {'G', 'U', 'C'}: 'V', {'G', 'U', 'A'}: 'V', {'G', 'U', 'G'}: 'V',
 		{'U', 'G', 'G'}: 'W',
 		{'U', 'A', 'U'}: 'Y', {'U', 'A', 'C'}: 'Y',
@@ -60,6 +48,11 @@ func (c *codon) translate() rune {
 type Entry struct {
 	nucAcid  DNA
 	rnucAcid RNA
+	aaSeq    Protein
+}
+
+func newEntry() *Entry {
+	return &Entry{}
 }
 
 // DNA Section
@@ -118,12 +111,8 @@ func (s *DNA) reverseComplement(auto rune) {
 	}
 }
 
+// TODO
 func (s *DNA) gcContent() float64 {
-	return 0.0
-}
-
-// only use if the user requests a set of subsequences
-func (s *DNA) subseqGcContent(entry int, end int) float64 {
 	return 0.0
 }
 
@@ -220,11 +209,11 @@ func (r *RNA) extractCodons() {
 				break
 			}
 			insert[i] = r.mRNA[k+i]
-			fmt.Println(r.mRNA[k+i])
+			//fmt.Println(r.mRNA[k+i])
 			i++
 		}
-		fmt.Println("Printing current insert")
-		fmt.Println(insert)
+		//fmt.Println("Printing current insert")
+		//fmt.Println(insert)
 		r.codons = append(r.codons, insert)
 		k += 3
 	}
@@ -250,38 +239,40 @@ func translateToProtein(m RNA) *Protein {
 	var tempAA []rune
 
 	for i := 0; i < len(m.codons); i++ {
-		fmt.Println(m.codons[i])
-		tempCodon := m.codons[i].translate()
-		fmt.Println(tempCodon)
-		tempAA = append(tempAA, tempCodon)
+		//fmt.Println(m.codons[i])
+		tempResidue := m.codons[i].translate()
+		//fmt.Println(tempResidue)
+		tempAA = append(tempAA, tempResidue)
+	}
+
+	// remove last element if it is invalid
+	if tempAA[len(tempAA)-1] == '!' {
+		tempAA = tempAA[:len(tempAA)-1]
 	}
 
 	p.aminoacid = string(tempAA)
+	p.size = len(p.aminoacid)
 	return &p
-}
-
-// remove the last residue if its codon did not include 3 nucleotides.
-func (p *Protein) removeDummyResidue() {
-
 }
 
 func main() {
 
+	// Code for Debugging:
 	// Testing DNA component
-	fmt.Println("Enter Sequence: ")
-	var seq string
-	fmt.Scanf("%s", &seq)
+	//fmt.Println("Enter Sequence: ")
+	//var seq string
+	//fmt.Scanf("%s", &seq)
 	//fmt.Println(seq)
 
-	testDNA := newDNA("test", seq)
+	//testDNA := newDNA("test", seq)
 	//testDNA.printStrands()
 
 	// Testing RNA component
-	testRNA := transcribe(*testDNA)
+	//testRNA := transcribe(*testDNA)
 	//fmt.Println(testRNA.sequence)
-	testRNA.mrnaPrint()
+	//testRNA.mrnaPrint()
 
 	// Testing Protein Component
-	testPrtn := translateToProtein(*testRNA)
-	fmt.Println(testPrtn)
+	//testPrtn := translateToProtein(*testRNA)
+	//fmt.Println(testPrtn)
 }

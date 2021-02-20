@@ -9,9 +9,9 @@ import (
 
 // fasta : each string in []string should have a max of 120 characters. dscr should be a max of 120 characters
 type fasta struct {
-	title     string
-	dscr      string
-	aminoacid []string
+	title string
+	dscr  string
+	nAcid []string
 }
 
 // fasta read constructor
@@ -19,13 +19,13 @@ func fread() *fasta {
 	dat, err := ioutil.ReadFile("/tmp/dat")
 
 	// temporary for debugging
-	fmt.Printf(dat, err)
+	fmt.Printf(string(dat), err)
 	// End Debugging
 
 	return &fasta{}
 }
 
-// fasta constructor without file input
+// TODO: fasta constructor without file input
 func ftouch() *fasta {
 	return &fasta{}
 }
@@ -35,6 +35,15 @@ func (f *fasta) fwrite() {
 
 }
 
-func (*fasta) formatfasta(name string, protein string) {
+// formatting output
+// place all components into 1 string, then insert '\n' newlines
+func (*fasta) formatfastaR(name string, nuc string) {
 
+}
+
+// panic() if error in output
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
 }
