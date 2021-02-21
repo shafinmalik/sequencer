@@ -52,7 +52,25 @@ type Entry struct {
 }
 
 func newEntry() *Entry {
-	return &Entry{}
+	var title string
+	var seq string
+
+	fmt.Println("Enter title: ")
+	fmt.Scanf("%s\n", &title)
+	fmt.Println("Enter Sequence: ")
+	fmt.Scanf("%s\n", &seq)
+
+	dna := newDNA(title, seq)
+	rna := transcribe(*dna)
+	aa := translateToProtein(*rna)
+
+	e := Entry{nucAcid: *dna, rnucAcid: *rna, aaSeq: *aa}
+	return &e
+}
+
+// Print Details
+func printEntry() {
+
 }
 
 // DNA Section
@@ -116,6 +134,7 @@ func (s *DNA) gcContent() float64 {
 	return 0.0
 }
 
+// Print Ladder format
 func (s *DNA) printStrands() {
 	for i := 0; i < s.size; i++ {
 		fmt.Printf("%c - %c\n", s.sequence[i], s.complement[i])
@@ -257,22 +276,8 @@ func translateToProtein(m RNA) *Protein {
 
 func main() {
 
-	// Code for Debugging:
-	// Testing DNA component
-	//fmt.Println("Enter Sequence: ")
-	//var seq string
-	//fmt.Scanf("%s", &seq)
-	//fmt.Println(seq)
+	Library := make([]Entry, 0)
 
-	//testDNA := newDNA("test", seq)
-	//testDNA.printStrands()
-
-	// Testing RNA component
-	//testRNA := transcribe(*testDNA)
-	//fmt.Println(testRNA.sequence)
-	//testRNA.mrnaPrint()
-
-	// Testing Protein Component
-	//testPrtn := translateToProtein(*testRNA)
-	//fmt.Println(testPrtn)
+	// Remove
+	fmt.Println(Library)
 }
