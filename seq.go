@@ -51,9 +51,11 @@ type Entry struct {
 	aaSeq    Protein
 }
 
-func newEntry() *Entry {
+func newEntry(mechanism rune) *Entry {
 	var title string
 	var seq string
+
+	// TODO: Get user input vs get from fasta
 
 	fmt.Println("Enter title: ")
 	fmt.Scanf("%s\n", &title)
@@ -69,7 +71,7 @@ func newEntry() *Entry {
 }
 
 // Print Details
-func printEntry() {
+func (e *Entry) printEntry() {
 
 }
 
@@ -275,9 +277,37 @@ func translateToProtein(m RNA) *Protein {
 }
 
 func main() {
-
 	Library := make([]Entry, 0)
+	exit := 'c'
+	run(&Library, exit)
+	// TODO
+}
 
-	// Remove
-	fmt.Println(Library)
+func run(e *[]Entry, c rune) {
+	for {
+		if c == 'q' || c == 'Q' {
+			break
+		} else if c == 'a' || c == 'A' {
+			// Add stuff into list
+		} else if c == 'e' || c == 'E' {
+			// Remove stuff from list
+		} else if c == 'w' {
+			// Write using genetext.go
+		} else if c == 'r' {
+			// Read using genetext.go
+		}
+	}
+	// fmt.Println(e)
+}
+
+func addEntryToList(n *[]Entry) {
+	*n = append(*n, *newEntry('1'))
+}
+
+func removeEntryFromList(n []Entry, name string) {
+
+}
+
+func outputList(n []Entry) {
+	fmt.Println("Printng List")
 }

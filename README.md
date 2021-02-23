@@ -3,18 +3,7 @@
  A simple bioinformatics tool for finding the similarity between amino acid sequences. 
 
  ### TODO: 
- - Implement GC Content functions
+ - Implement main in seq.go
  - Refactor for "while" loops
- - Implement Protein structs
-    - Contain 2 strings (string for aa seq)
-    - functions from simindex
- 
-## DNA struct
-
-## RNA struct
-
-## Protein
-
-# genetext.go
-
-# simindex.go
+ - Implement fasta format read/write in genetext.go
+ - Implement similarity matrix generator (simindex.go)
