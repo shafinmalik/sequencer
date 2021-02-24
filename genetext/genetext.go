@@ -10,16 +10,36 @@ import (
 // fasta : each string in []string should have a max of 120 characters. dscr should be a max of 120 characters
 type fasta struct {
 	title string
-	dscr  string
 	nAcid string
 }
 
 // fasta read constructor
-func fread() *fasta {
-	dat, err := ioutil.ReadFile("/tmp/dat")
+func fread(filename string) *fasta {
+	// for testing
+	dat, err := ioutil.ReadFile("/tmp/" + filename)
+	check(err)
 
+	contents = string(dat)
+	var start string
+	foundStart := false
+	var end string
+	for i := 0; i < len(contents); i++ {
+		// extract the title
+		if contents[i] == '>' {
+			start = i
+			foundStart = true
+		}
+
+		if foundStart && contents[i] == '\n' {
+			end = i
+		}
+	}
+
+	newTitle := contents[start:end]
+
+	// Now extract nAcid
 	// temporary for debugging
-	fmt.Printf(string(dat), err)
+	fmt.Println(contents, err)
 	// End Debugging
 
 	return &fasta{}
@@ -41,9 +61,17 @@ func (f *fasta) fwrite() bool {
 			f.nAcid = f.nAcid[:i] + "\n" + f.nAcid[i:]
 		}
 	}
-	dat = dat + f.dscr + f.nAcid
+	dat = dat + f.nAcid
+	dump := []byte(dat)
 
+	var filename string
+	fmt.Println("Enter Filename: ")
+	fmt.Scanf("%s\n", &filename)
+	filename = "/tmp/" + filename
+
+	err := ioutil.WriteFile(filename, dump, 0644)
 	// Write to file - return true if successful
+	check(err)
 
 	return true
 }
