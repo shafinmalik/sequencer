@@ -7,6 +7,9 @@ import (
 type dotplot struct {
 	plot   image.RGBA
 	matrix [][]rune
+	seq0   []rune
+	seq1   []rune
+	gene   bool // false if amino acid sequence
 }
 
 // TODO

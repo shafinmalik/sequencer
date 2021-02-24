@@ -11,7 +11,7 @@ import (
 type fasta struct {
 	title string
 	dscr  string
-	nAcid []string
+	nAcid string
 }
 
 // fasta read constructor
@@ -31,10 +31,24 @@ func ftouch() *fasta {
 }
 
 // fasta write output (possibly change return type to int or bool)
-func (f *fasta) fwrite() {
+func (f *fasta) fwrite() bool {
+	// insert '\n' after title
+	// insert '\n' to sequence every 120 runes
+	// then append sequence to title.
+	dat := f.title + "\n"
+	for i := 0; i < len(f.nAcid); i++ {
+		if i%120 == 0 {
+			f.nAcid = f.nAcid[:i] + "\n" + f.nAcid[i:]
+		}
+	}
+	dat = dat + f.dscr + f.nAcid
 
+	// Write to file - return true if successful
+
+	return true
 }
 
+// Redundant -- Remove -->
 // formatting output
 // place all components into 1 string, then insert '\n' newlines
 func (*fasta) formatfastaR(name string, nuc string) {
