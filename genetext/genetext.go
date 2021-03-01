@@ -19,10 +19,10 @@ func fread(filename string) *fasta {
 	dat, err := ioutil.ReadFile("/tmp/" + filename)
 	check(err)
 
-	contents = string(dat)
-	var start string
+	contents := string(dat)
+	var start int
 	foundStart := false
-	var end string
+	var end int
 	for i := 0; i < len(contents); i++ {
 		// extract the title
 		if contents[i] == '>' {
@@ -36,7 +36,7 @@ func fread(filename string) *fasta {
 	}
 
 	newTitle := contents[start:end]
-
+	fmt.Println(newTitle)
 	// Now extract nAcid
 	// temporary for debugging
 	fmt.Println(contents, err)

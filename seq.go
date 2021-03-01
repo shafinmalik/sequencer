@@ -51,7 +51,7 @@ type Entry struct {
 	aaSeq    Protein
 }
 
-func newEntry(mechanism rune) *Entry {
+func newEntry(mechanism int) *Entry {
 	var title string
 	var seq string
 
@@ -285,27 +285,55 @@ func main() {
 
 func run(e *[]Entry, c rune) {
 	for {
+		fmt.Print("(Q)uit\n(A)dd Sequence\n(E)rase Sequence\n(W)rite to file\n(R)ead From File\n(D)isplay")
+		fmt.Scanf("%c\n", &c)
 		if c == 'q' || c == 'Q' {
 			break
 		} else if c == 'a' || c == 'A' {
-			// Add stuff into list
+			addEntryToList(e)
 		} else if c == 'e' || c == 'E' {
 			// Remove stuff from list
+			var item string
+			fmt.Println("Enter Title of Object to Remove.")
+			fmt.Scanf("%s", &item)
+
+			removed := removeEntryFromList(e, item)
+			if removed {
+				fmt.Println("Successfuly removed: " + item)
+			} else {
+				fmt.Println(item + " does not exist in the Library.")
+			}
 		} else if c == 'w' {
 			// Write using genetext.go
 		} else if c == 'r' {
 			// Read using genetext.go
+		} else if c == 'o' || c == 'O' {
+			outputList(*e)
 		}
 	}
 	// fmt.Println(e)
 }
 
 func addEntryToList(n *[]Entry) {
-	*n = append(*n, *newEntry('1'))
+	var choice int
+	fmt.Print("1) Add by input\n2) Add from file\n")
+	fmt.Scanf("%d\n", &choice)
+	*n = append(*n, *newEntry(choice))
 }
 
-func removeEntryFromList(n []Entry, name string) {
-
+func removeEntryFromList(n *[]Entry, name string) bool {
+	// return false if name is not in n
+	removable := false
+	var newSlice []Entry
+	for i := 0; i < len(*n); i++ {
+		if (*n)[i].nucAcid.name == name {
+			removable = true
+		} else {
+			newSlice = append(newSlice, (*n)[i])
+		}
+	}
+	*n = newSlice
+	return removable
 }
 
 func outputList(n []Entry) {
