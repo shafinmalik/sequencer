@@ -76,13 +76,6 @@ func (f *fasta) fwrite() bool {
 	return true
 }
 
-// Redundant -- Remove -->
-// formatting output
-// place all components into 1 string, then insert '\n' newlines
-func (*fasta) formatfastaR(name string, nuc string) {
-
-}
-
 // panic() if error in output
 func check(e error) {
 	if e != nil {
