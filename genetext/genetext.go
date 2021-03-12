@@ -13,6 +13,7 @@ type fasta struct {
 	nAcid string
 }
 
+// Refactor to read line by line
 // fasta read constructor
 func Fread(filename string) *fasta {
 	// for testing
@@ -35,11 +36,11 @@ func Fread(filename string) *fasta {
 		}
 	}
 
-	newTitle := contents[start:end]
+	newTitle := contents[start+1 : end]
 	fmt.Println(newTitle)
 	// Now extract nAcid
 	// temporary for debugging
-	fmt.Println(contents, err)
+	//fmt.Println(contents, err)
 	// End Debugging
 
 	return &fasta{}
