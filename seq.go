@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sequencer/genetext"
 	"unicode"
 )
 
@@ -277,6 +278,9 @@ func translateToProtein(m RNA) *Protein {
 }
 
 func main() {
+	fprt := genetext.Fread("tmt.txt")
+	fmt.Println(fprt)
+
 	Library := make([]Entry, 0)
 	exit := 'c'
 	run(&Library, exit)

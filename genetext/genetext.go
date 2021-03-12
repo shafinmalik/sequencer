@@ -14,9 +14,9 @@ type fasta struct {
 }
 
 // fasta read constructor
-func fread(filename string) *fasta {
+func Fread(filename string) *fasta {
 	// for testing
-	dat, err := ioutil.ReadFile("/tmp/" + filename)
+	dat, err := ioutil.ReadFile(filename)
 	check(err)
 
 	contents := string(dat)
@@ -46,12 +46,12 @@ func fread(filename string) *fasta {
 }
 
 // TODO: fasta constructor without file input
-func ftouch() *fasta {
+func Ftouch() *fasta {
 	return &fasta{}
 }
 
 // fasta write output (possibly change return type to int or bool)
-func (f *fasta) fwrite() bool {
+func (f *fasta) Fwrite() bool {
 	// insert '\n' after title
 	// insert '\n' to sequence every 120 runes
 	// then append sequence to title.
