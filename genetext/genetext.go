@@ -1,8 +1,10 @@
 package genetext
 
 import (
+	"bufio"
 	"fmt"
 	"io/ioutil"
+	"os"
 )
 
 // Use this pkg to export in FASTA format
@@ -13,37 +15,44 @@ type fasta struct {
 	nAcid string
 }
 
-// Refactor to read line by line
+// Debugging for testing Read/Constructors
+func (f fasta) GetVars() {
+	fmt.Println("Name below: ")
+	fmt.Println(f.title)
+	fmt.Println("Sequence below: ")
+	fmt.Println(f.nAcid)
+}
+
 // fasta read constructor
 func Fread(filename string) *fasta {
+
+	var name string
+	var sequence string
 	// for testing
-	dat, err := ioutil.ReadFile(filename)
+	file, err := os.Open(filename)
 	check(err)
 
-	contents := string(dat)
-	var start int
-	foundStart := false
-	var end int
-	for i := 0; i < len(contents); i++ {
-		// extract the title
-		if contents[i] == '>' {
-			start = i
-			foundStart = true
-		}
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanLines)
+	var fileStrings []string
 
-		if foundStart && contents[i] == '\n' {
-			end = i
-		}
+	for scanner.Scan() {
+		fileStrings = append(fileStrings, scanner.Text())
 	}
 
-	newTitle := contents[start+1 : end]
-	fmt.Println(newTitle)
-	// Now extract nAcid
-	// temporary for debugging
-	//fmt.Println(contents, err)
-	// End Debugging
+	file.Close()
 
-	return &fasta{}
+	sequence = ""
+	if len(fileStrings) >= 2 && fileStrings[0][0] == '>' {
+		name = fileStrings[0]
+		for i := 1; i < len(fileStrings); i++ {
+			sequence = sequence + fileStrings[i]
+		}
+	} else {
+		fmt.Println("Invalid Fasta File.")
+	}
+
+	return &fasta{title: name, nAcid: sequence}
 }
 
 // TODO: fasta constructor without file input
