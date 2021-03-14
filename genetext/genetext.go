@@ -9,6 +9,9 @@ import (
 
 // Use this pkg to export in FASTA format
 
+// Constants
+const linewidth int = 120
+
 // fasta : each string in []string should have a max of 120 characters. dscr should be a max of 120 characters
 type fasta struct {
 	title string
@@ -65,9 +68,9 @@ func (f *fasta) Fwrite() bool {
 	// insert '\n' after title
 	// insert '\n' to sequence every 120 runes
 	// then append sequence to title.
-	dat := f.title + "\n"
+	dat := f.title // + "\n"
 	for i := 0; i < len(f.nAcid); i++ {
-		if i%120 == 0 {
+		if i%linewidth == 0 {
 			f.nAcid = f.nAcid[:i] + "\n" + f.nAcid[i:]
 		}
 	}
@@ -77,7 +80,7 @@ func (f *fasta) Fwrite() bool {
 	var filename string
 	fmt.Println("Enter Filename: ")
 	fmt.Scanf("%s\n", &filename)
-	filename = "/tmp/" + filename
+	// filename = "/tmp/" + filename
 
 	err := ioutil.WriteFile(filename, dump, 0644)
 	// Write to file - return true if successful

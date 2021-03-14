@@ -277,9 +277,13 @@ func translateToProtein(m RNA) *Protein {
 	return &p
 }
 
+// Main
 func main() {
-	fprt := genetext.Fread("tmt.txt")
+	// Check genetext read/write
+	fprt := genetext.Fread("genetest.txt")
 	fprt.GetVars()
+	check := fprt.Fwrite()
+	fmt.Println(check)
 
 	Library := make([]Entry, 0)
 	exit := 'c'
