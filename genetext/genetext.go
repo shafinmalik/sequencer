@@ -18,7 +18,7 @@ type fasta struct {
 	nAcid string
 }
 
-// Debugging for testing Read/Constructors
+// Debugging for testing Read/Constructors: Remove later
 func (f fasta) GetVars() {
 	fmt.Println("Name below: ")
 	fmt.Println(f.title)
