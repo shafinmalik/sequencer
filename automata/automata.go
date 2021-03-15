@@ -37,6 +37,10 @@ type Automata struct {
 
 }
 
+func AutomataConstructor() *Automata {
+	return &Automata{numstates: 0}
+}
+
 // Pattern Search Functions (No Struct):
 // Returns the position of the first occurence of given pattern. Additionally prints results vertically.
 func SearchFirstOccurance(seq []rune, pattern string) int {
