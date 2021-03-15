@@ -8,6 +8,7 @@ import (
 )
 
 // Use this pkg to export in FASTA format
+// Allow user option to adjust linewidth?
 
 // Constants
 const linewidth int = 120
