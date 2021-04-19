@@ -2,24 +2,30 @@ package automata
 
 // Class BoyerMoore and Associated Functions:
 type BoyerMoore struct {
-	alphabet rune
-	pattern  []rune
+	alphabet  []rune
+	pattern   []rune
+	f         []int
+	s         []int
+	occurence map[rune]int
 }
 
 // Add a constructor tbd
 
 // Preprocessing - called by constructor
-func (bm BoyerMoore) preprocess() {
-
+func (bm *BoyerMoore) preprocess() {
+	bm.processBCR()
+	bm.processGSR()
 }
 
 // BCR processing - called by constructor
-func (bm BoyerMoore) processBCR() {
+func (bm *BoyerMoore) processBCR() {
+	bm.occurence = map[rune]int{}
 
+	// parse through runes in alphabet
 }
 
 // GSR processing - called by constructor
-func (bm BoyerMoore) processGSR() {
+func (bm *BoyerMoore) processGSR() {
 
 }
 
